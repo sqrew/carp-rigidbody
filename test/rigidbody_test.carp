@@ -11,13 +11,13 @@
   (let [state (Test.State.init 0 0)]
     (do
       ;; 1. Initialization
-      (let [rb (RigidBody.new (Vector3.init 1.0 2.0 3.0) (Quaternion.identity) 1.0 0.5 0.5 1.0)]
+      (let [rb (RigidBody.new (Vector3.init 1.0 2.0 3.0) (Quaternion.identity) 1.0 0.5 0.5 1.0 1.0 1.0)]
         (do
           (set! state (Test.assert-equal &state 1.0 @(Vector3.x (RigidBody.position &rb)) "Position X init correctly"))
           (set! state (Test.assert-equal &state 1.0 @(Body.mass (RigidBody.body &rb)) "Mass init correctly"))))
 
       ;; 2. Proxy Force & Step
-      (let [rb2 (RigidBody.new (Vector3.init 0.0 0.0 0.0) (Quaternion.identity) 1.0 0.0 0.0 1.0)]
+      (let [rb2 (RigidBody.new (Vector3.init 0.0 0.0 0.0) (Quaternion.identity) 1.0 0.0 0.0 1.0 1.0 1.0)]
         (do
           (RigidBody.apply-force! &rb2 &(Vector3.init 10.0 0.0 0.0))
           (RigidBody.step! &rb2 0.01)

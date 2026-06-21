@@ -13,10 +13,10 @@
 
 (defmodule RigidBody
   (doc new "creates a dynamic RigidBody with mass and physical properties.")
-  (defn new [pos rot mass restitution friction damping]
+  (defn new [pos rot mass restitution friction damping ang-damping inertia]
     (RigidBody.init 
       (Transform.init pos rot (Vector3.init 1.0 1.0 1.0))
-      (Body.new mass restitution friction damping)))
+      (Body.new mass restitution friction damping ang-damping inertia)))
 
   (doc static "creates an immovable RigidBody at a fixed position.")
   (defn static [pos rot restitution friction]
@@ -42,9 +42,17 @@
   (defn apply-force! [rb f]
     (Body.apply-force! (RigidBody.body rb) f))
 
+  (doc apply-torque! "proxy to apply a continuous torque to the underlying body.")
+  (defn apply-torque! [rb t]
+    (Body.apply-torque! (RigidBody.body rb) t))
+
   (doc apply-impulse! "proxy to apply an instantaneous impulse to the underlying body.")
   (defn apply-impulse! [rb impulse]
     (Body.apply-impulse! (RigidBody.body rb) impulse))
+
+  (doc apply-angular-impulse! "proxy to apply an instantaneous angular impulse.")
+  (defn apply-angular-impulse! [rb impulse]
+    (Body.apply-angular-impulse! (RigidBody.body rb) impulse))
 
   (doc position "returns a reference to the transform's position.")
   (defn position [rb]
